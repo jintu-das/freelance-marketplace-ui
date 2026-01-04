@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as SubmitProjectRouteImport } from './routes/submit-project'
+import { Route as AiConsultantRouteImport } from './routes/ai-consultant'
 import { Route as IndexRouteImport } from './routes/index'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const SubmitProjectRoute = SubmitProjectRouteImport.update({
+  id: '/submit-project',
+  path: '/submit-project',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiConsultantRoute = AiConsultantRouteImport.update({
+  id: '/ai-consultant',
+  path: '/ai-consultant',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,37 +31,48 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/ai-consultant': typeof AiConsultantRoute
+  '/submit-project': typeof SubmitProjectRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/ai-consultant': typeof AiConsultantRoute
+  '/submit-project': typeof SubmitProjectRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/ai-consultant': typeof AiConsultantRoute
+  '/submit-project': typeof SubmitProjectRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/ai-consultant' | '/submit-project'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/ai-consultant' | '/submit-project'
+  id: '__root__' | '/' | '/ai-consultant' | '/submit-project'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  AiConsultantRoute: typeof AiConsultantRoute
+  SubmitProjectRoute: typeof SubmitProjectRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/submit-project': {
+      id: '/submit-project'
+      path: '/submit-project'
+      fullPath: '/submit-project'
+      preLoaderRoute: typeof SubmitProjectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-consultant': {
+      id: '/ai-consultant'
+      path: '/ai-consultant'
+      fullPath: '/ai-consultant'
+      preLoaderRoute: typeof AiConsultantRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,7 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  AiConsultantRoute: AiConsultantRoute,
+  SubmitProjectRoute: SubmitProjectRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
