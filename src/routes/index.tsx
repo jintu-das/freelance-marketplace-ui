@@ -1,5 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
+import { DataTable } from "@/components/ui/data-table";
+import { columns } from "./-components/columns";
+import { mockProjects } from "./-components/mock-data";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -7,9 +9,9 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
-      <Button>Click me</Button>
+    <div className="container mx-auto py-10">
+      <h1 className="text-2xl font-bold mb-6">Projects</h1>
+      <DataTable columns={columns} data={mockProjects} />
     </div>
   );
 }
